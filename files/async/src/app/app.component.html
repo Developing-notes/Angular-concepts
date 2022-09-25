@@ -1,0 +1,31 @@
+<!-- <table class="table">
+  <thead>
+    <tr class="table-primary">
+      <th>#User Id</th>
+      <th>Name</th>
+      <th>User Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of USERS">
+      <th scope="row">{{data.id}}</th>
+      <td>{{data.name}}</td>
+      <td>{{data.username}}</td>
+      <td>{{data.email}}</td>
+    </tr>
+  </tbody>
+</table>
+ -->
+ <div style="text-align:center">
+   <h1>output</h1>
+   <h2>I am a Parent</h2>
+    </div>
+<div>
+  <div>
+<app-student (myOutput) ="GetChildData($event)">
+</app-student>
+{{message}}
+
+</div>
+</div>

@@ -1,0 +1,19 @@
+<p>onewaybinding works!</p>
+<span [innerHTML]='work'></span>                
+
+ <input (change)="print($event)" >
+
+<!-- ifelse -->
+ <ng-container *ngIf="data && isValid">
+    <div>
+        Data found
+    </div> 
+ </ng-container>
+
+ <ng-container>
+    <div  *ngIf="!data ">
+        Data not found
+</div>  
+ </ng-container>
+
+ 

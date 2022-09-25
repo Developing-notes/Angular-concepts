@@ -1,0 +1,25 @@
+<div class="container">
+  <button type="button" (click)="getProducts()">
+    view</button>
+<div class="table-resposive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>name</th>
+        <th>price</th>
+        <th>stacklist</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of b;">
+        <td>{{product.no}}</td>
+        <td>{{product.name}}</td> 
+        <td>{{product.price}}</td>
+        <td>{{product.stack}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<app-hello></app-hello>

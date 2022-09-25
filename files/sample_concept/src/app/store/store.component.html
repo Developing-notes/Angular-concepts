@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col bg-dark text-white">
+      <img src="assets/header2.jpg" style="height: 100px" alt="" />
+      <a class="navbar-brand text-warning">Online Shopping Mart</a>
+      <cart-summary></cart-summary> 
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+    <div class="col-3 p-2">
+      <button
+        class="btn btn-block btn-outline-primary"
+        (click)="changeCategory()"
+      >
+        Home
+      </button>
+      <button
+        *ngFor="let cat of categories"
+        class="btn btn-outline-primary btn-group"
+        [class.active]="cat == selectedCategory"
+        (click)="changeCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+
+
+        <button class="btn btn-block btn-danger mt-5" routerLink="/admin">
+          Admin
+          </button>
+    </div>
+    
+
+    <div class="col-9 p-2">
+      <div *ngFor="let product of products" class="card m-1 p-1 bg-light">
+        <h4>
+          {{ product.name }}
+          <span class="badge bg-pill bg-primary float-end">
+            {{ product.price | currency: "INR":"symbol":"2.2-2" }}
+          </span>
+        </h4>
+        <div class="card-text bg-white p-1">
+          {{ product.description }}
+          <button
+            class="btn btn-success btn-sm float-end"
+            (click)="addProductToCart(product)"
+          >
+            Add To Cart
+          </button>
+        </div>
+      </div>
+      <div class="btn-group float-start">
+        <button
+          *counter="let page of pageCount"
+          (click)="changePage(page)"
+          class="btn btn-outline-primary"
+          [class.active]="page == selectedPage"
+        >
+          {{ page }}
+        </button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,26 @@
+<!-- <div *ngIf="data;then currentdata; else templateName"></div> -->
+<!-- <ng-template
+  [ngIf]="data"
+  [ngIfThen]="currentdata"
+  [ngElse]="templateName"
+></ng-template>
+<ng-template #currentdata>
+  <div *ngFor="let list of data; trackBy: getname">
+    <div [ngSwitch]="list.gender">
+      <div *ngSwitchCase="'m'">{{ list.name }}</div>
+      <div *ngSwitchCase="'f'">{{ list.name }}</div>
+      <div *ngSwitchDefault>{{ list.name }}</div>
+    </div>
+  </div>
+</ng-template>
+<button (click)="onclick()">click</button>
+<ng-template #templateName> nouserfound </ng-template> -->
+
+
+<button (click)="changevalue()">changevalue</button>
+<ng-template [showcontent]="display" >
+  <p>
+  this ngtempleate condition
+</p>
+</ng-template>
+ 

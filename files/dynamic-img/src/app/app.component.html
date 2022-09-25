@@ -1,0 +1,15 @@
+<hr/>
+List Of Images
+<hr/>
+
+<div *ngFor="let i of numArr">
+
+    <app-ngui-in-view>
+    <img *ngIf src="https://picsum.photos/800/300?image={{i}}" 
+    height="33%">
+  </app-ngui-in-view>
+</div>
+
+<div class="num-images">
+  Number of &lt;img> tag on document: {{numImages}}
+</div>

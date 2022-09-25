@@ -1,0 +1,16 @@
+<form [formGroup]="myForm" (ngSubmit) = "submitForm()">
+
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+  
+    <label>Age:</label>
+    <input type="text" formControlName="age"  />
+  
+    <button type="submit" >Submit</button>
+  
+  </form>
+  
+  <p>Name: {{myForm.controls.name.value}}</p>
+  <p>Age: {{myForm.controls.age.value}}</p>
+  
+<p style="color:red" [hidden] = "myForm.valid || !myForm.touched">Your name is required!</p>
