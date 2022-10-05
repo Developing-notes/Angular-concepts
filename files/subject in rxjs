@@ -1,0 +1,110 @@
+general.service.ts
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, interval, Observable, of, Subject, Subscription } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GeneralService {
+
+  sub: Subject<number>
+  constructor() {
+    this.sub = new Subject<number>()
+  }
+  sendData(data) {
+    this.sub.next(data)
+  }
+}
+
+
+---------------------------------------------------------------------------------------
+hello.component.ts
+
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { interval, of, Subscription } from 'rxjs';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-hello',
+  template: `
+  hello:{{result}}
+    `,
+  styleUrls: ['./hello.component.css'],
+})
+export class HelloComponent {
+  show: any;
+  result=null
+  ngOnInit() {
+    this.subjectRxjs()
+    console.log('this is oninit');
+  }
+  constructor(private changeDetector: ChangeDetectorRef,
+    private generalService: GeneralService,
+  ) {
+  }
+
+  //subject methods in rxjs 
+  
+  subjectRxjs(){
+    this.generalService.sub.subscribe(x=>{
+      console.log("one component:++++++++++++ ", x);
+      this.result=x
+
+    })
+  }
+
+}
+--------------------------------------------------------------------------
+childcomponent.ts
+
+import { Component, OnInit,Input } from '@angular/core';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-childlifecycle',
+  templateUrl: './childlifecycle.component.html',
+  styleUrls: ['./childlifecycle.component.css']
+})
+export class ChildlifecycleComponent implements OnInit {
+  isstatus:boolean=true
+  result= null
+    constructor(private generalService:GeneralService) {
+    console.log('childconstructor');
+  }
+
+  /
+  ngOnInit(): void {
+    console.log('childoninit');
+    this.subjectRxjs()
+  }
+
+  
+  subjectRxjs(){
+    this.generalService.sub.subscribe(x=>{
+      console.log("two component:++++++++++++ ", x);
+      this.result=x
+    })
+  }
+  emitSubject(){
+    this.generalService.sendData(Math.random())
+  }
+
+
+}
+
+
+child.component.html
+
+<button (click)="emitSubject()">EmitSubject</button>
+<p >
+   app:{{result}}
+</p>
+
+
+
