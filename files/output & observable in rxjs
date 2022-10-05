@@ -1,0 +1,115 @@
+hello component.ts
+
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { interval, of, Subscription } from 'rxjs';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-hello',
+  template: `
+
+ <div class="zippy">
+      <button type="button" (click)="toggle()">Toggle</button>
+    </div> 
+
+  `,
+  styleUrls: ['./hello.component.css'],
+})
+export class HelloComponent {
+  mySubscription: Subscription
+  content1: any;
+  content2: any
+  show: any;
+  result=null
+  myObservable: any;
+  myObserver: { next: (x: number) => void; error: (err: Error) => void; complete: () => void; };
+  ngOnInit() {
+    this.details()
+  }
+  constructor(private changeDetector: ChangeDetectorRef,
+    private generalService: GeneralService,
+  ) {
+  }
+
+
+
+  visible = true;
+  @Output() open = new EventEmitter<any>();
+  @Output() close = new EventEmitter<any>();
+
+  toggle() {
+    console.log("++++++++++++++++next");
+    this.visible = !this.visible;
+    if (this.visible) {
+    } else {
+      this.open.emit("hello");
+      this.close.emit("world");
+    }
+  }
+
+
+  // observable methods in rxjs
+  details() {
+    this.myObservable = of(1, 2, 3);
+    // Create observer object
+    this.myObserver = {
+      next: (x: number) => console.log('Observer got a next value: ' + x),
+      error: (err: Error) => console.error('Observer got an error: ' + err),
+      complete: () => console.log('Observer got a complete notification'),
+    };
+    this.myObservable.subscribe(this.myObserver);
+  }
+
+
+
+}
+
+
+child.component.ts
+import { Component, OnInit,Input } from '@angular/core';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-childlifecycle',
+  templateUrl: './childlifecycle.component.html',
+  styleUrls: ['./childlifecycle.component.css']
+})
+export class ChildlifecycleComponent {
+  isstatus:boolean=true
+  open: any;
+  close: any;
+    constructor(private generalService:GeneralService) {
+    console.log('childconstructor');
+  }
+
+  onOpen(val:any){
+    this.content1=val
+   this.isstatus=true
+  }
+  onClose(val:any){
+    this.content2=val
+    this.isstatus=false
+  }
+}
+
+child component.html
+
+<app-hello (open)="onOpen($event)" (close)="onClose($event)"> </app-hello> 
+
+<p [hidden]="isstatus">
+    {{content1}}
+</p>
+<p [hidden]="!isstatus">
+    {{content2}}
+</p>  
+
+
+
+
+
