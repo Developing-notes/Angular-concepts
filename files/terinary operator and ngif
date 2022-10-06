@@ -1,0 +1,107 @@
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { interval, of, Subscription } from 'rxjs';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-hello',
+  template: `
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr  *ngFor="let item of mockResults1">
+      <td>{{item.firstName}}</td>
+      <td>{{item.lastName}}</td>
+            
+    
+    <td>{{(item.status===1)?'john':(item.status===2)?'david':(item.status===3)?'arjun':'vishal'}}</td>
+    </tr>
+
+
+  </tbody>
+</table>
+
+<ng-container *ngFor="let item of mockResults1">
+<ng-template [ngIf]="item.status === 1">
+  hello1
+</ng-template>
+<ng-template [ngIf]="item.status === 2">
+  hello2  
+</ng-template>
+<ng-template [ngIf]="item.status === 3">
+  hello3  
+</ng-template>
+</ng-container>
+
+
+
+  `,
+  styleUrls: ['./hello.component.css'],
+})
+export class HelloComponent {
+  ngOnInit() {
+    this.details()
+    this.subjectRxjs()
+    console.log('this is oninit');
+    // this.setInterval()    
+  }
+  constructor(private changeDetector: ChangeDetectorRef,
+    private generalService: GeneralService,
+  ) {
+  }
+
+
+
+  mockResults = [
+    {
+      firstName: 'vikram',
+      lastName: 'vishal',
+      status: true
+    },
+    {
+      firstName: 'david',
+      lastName: 'kumar',
+      status: true
+    },
+    {
+      firstName: 'arjun',
+      lastName: 'kumar',
+      status: false
+    }
+  ];
+
+  mockResults1 = [
+    {
+      firstName: 'vikram',
+      lastName: 'vishal',
+      status: 1
+    },
+    {
+      firstName: 'david',
+      lastName: 'kumar',
+      status: 2
+    },
+    {
+      firstName: 'arjun',
+      lastName: 'kumar',
+      status: 3
+    }
+    ,
+    {
+      firstName: 'arjun',
+      lastName: 'kumar',
+      status: 4
+    }
+  ];
+}
