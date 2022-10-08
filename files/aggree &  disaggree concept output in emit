@@ -1,0 +1,41 @@
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { interval, of, Subscription } from 'rxjs';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-hello',
+  template: `
+<button (click)="voteList(true)" [disabled]="isVoted?true :false">Agree</button>
+<button (click)="voteList(false)"[disabled]="isVoted?true :false">Disagree</button>{{result}}
+
+  `,
+  styleUrls: ['./hello.component.css'],/
+})
+export class HelloComponent {
+  @Output() onVoted = new EventEmitter<boolean>();
+  isVoted = false
+
+  result: any
+  ngOnInit() {
+   }
+  constructor(private changeDetector: ChangeDetectorRef,
+    private generalService: GeneralService,
+  ) {
+  }
+
+  
+  voteList(agreed:boolean){
+    this.result= agreed
+    this.onVoted.emit(agreed)
+    this.isVoted=true
+  }
+  
+
+}
+
