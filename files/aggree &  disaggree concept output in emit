@@ -3,8 +3,8 @@ import {
   Component,
   EventEmitter,
   OnInit,
-  Output,
-} from '@angular/core';
+  Output,  
+} from '@angular/core'
 import { interval, of, Subscription } from 'rxjs';
 import { GeneralService } from '../common/general.service';
 
