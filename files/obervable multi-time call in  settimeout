@@ -1,0 +1,54 @@
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { interval, Observable, of, Subscription } from 'rxjs';
+import { GeneralService } from '../common/general.service';
+
+@Component({
+  selector: 'app-hello',
+  template: `
+
+  {{list}}
+})
+export class HelloComponent {
+  list: any;
+  constructor(private changeDetector: ChangeDetectorRef,
+    private generalService: GeneralService,
+  ) {
+  }
+  
+  obs = new Observable((observer) => {
+   this.list="hello"
+   setTimeout(() => {
+    observer.next(this.list ="welcome")
+   }, 3000);
+   setTimeout(() => {
+    observer.next(this.list ="welcome1")
+   }, 5000);
+   setTimeout(() => {
+    observer.next(this.list ="welcome2")
+   }, 6000);
+   setTimeout(() => {
+    observer.next(this.list ="welcome3")
+   }, 7000);
+   setTimeout(() => {
+    observer.next(this.list ="welcome4")
+   }, 8000);
+  })
+ 
+  data=[];
+   
+  ngOnInit() {
+   this.obs.subscribe(
+      val=> { console.log(val,"++++++++++++++++++++val") },
+      error => { console.log("error")},
+      () => {console.log("Completed")}
+    )
+  }
+
+}
+
