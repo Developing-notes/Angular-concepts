@@ -1,0 +1,59 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { concat, of, Observable, Subject, BehaviorSubject, timer } from 'rxjs';
+import {
+  tap,
+  concatMap,
+  delay,
+  switchMap,
+  map,
+  merge,
+  takeUntil,
+  repeat,
+} from 'rxjs/operators';
+
+@Component({
+  selector: 'my-app',
+  template: `
+    DateTime: {{ dateTime$ | async | date: 'medium' }}
+    <br>
+    <button (click)='refreshDataClick()'>Refresh data</button>
+  `,
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
+
+  dateTime$: Observable<Date>;
+  triggerRefresh = new BehaviorSubject(true);
+
+  constructor() {}
+
+  ngOnInit() {
+    this.dateTime$ = this.triggerRefresh.pipe(
+      takeUntil(this.ngUnsubscribe),
+      switchMap((_) =>
+        concat(
+          this.getDate(),
+          this.getDate().pipe(
+            delay(5000),
+            tap((_) => this.triggerRefresh.next(true))
+          )
+        )
+      )
+    );
+  }
+
+  getDate() {
+    return of(new Date());
+  }
+
+  refreshDataClick() {
+    this.triggerRefresh.next(true);
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+}
