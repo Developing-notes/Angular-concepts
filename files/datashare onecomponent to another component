@@ -1,0 +1,80 @@
+
+service file
+---------------
+import { Injectable } from '@angular/core';
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  message: any;
+  constructor() { 
+   
+  }
+  sendMessage(data:any){
+    this.message=data
+    console.log("data: ", data);
+  }
+  getMessage(){
+    return this.message
+  }
+}
+
+
+first component 
+-----------------
+
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from "@angular/core";
+import { CommonService } from "src/app/common/common.service";
+
+@Component({
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.scss"],
+})
+export class RegisterComponent implements OnInit {
+  message = "hello world!";
+  
+  constructor() {}
+  ngOnInit() {
+    this.apiService.sendMessage(this.message);
+  }
+
+ 
+}
+
+second component
+-------------------
+
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { NgForm } from "@angular/forms";
+import { MatSnackBar } from "@angular/material";
+import { Router } from "@angular/router";
+import { ApiService } from "src/app/api/api.service";
+import { CommonService } from "src/app/common/common.service";
+
+@Component({
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
+})
+export class LoginComponent implements OnInit {
+  message: any;
+
+  constructor(
+    public commonService: CommonService,
+  ) {
+   }
+
+  ngOnInit() {
+    this.message =this.apiService.getMessage()
+    console.log(" this.message: ",  this.message);
+  }
+}
+
+
