@@ -10,11 +10,11 @@ export class ApiService {
   constructor() { 
    
   }
-  sendMessage(data:any){
+  sendData(data:any){
     this.message=data
     console.log("data: ", data);
   }
-  getMessage(){
+  receiveData(){
     return this.message
   }
 }
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   
   constructor() {}
   ngOnInit() {
-    this.apiService.sendMessage(this.message);
+    this.apiService.sendData(this.message);
   }
 
  
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.message =this.apiService.getMessage()
+    this.message =this.apiService.receiveData()
     console.log(" this.message: ",  this.message);
   }
 }
