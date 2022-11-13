@@ -1,0 +1,51 @@
+ ngOnInit() {
+    // debounceTime rxjs method
+    const click = fromEvent(document, "click");
+    const result = click.pipe(debounceTime(1000));
+    result.subscribe((x) => {
+      console.log("debounce++++: ", x);
+    });
+
+    
+    // distinctUntilChanged rxjs method
+    // duplicate value remove
+    of("david", "david", "gopal", "gopi", "suresh", "suresh")
+      .pipe(distinctUntilChanged())
+      .subscribe((response: any) => {
+        console.log("distinctUntilChanged+++", response);
+      });
+
+    //  filter rxjs method
+
+    const clicks = fromEvent(document, "click");
+    const domAccess = clicks.pipe(
+      filter((filterData) => (<HTMLElement>filterData.target).tagName === "DIV")
+    );
+    domAccess.subscribe((filterData: any) => {
+      if (filterData.target.tagName === "DIV") {
+        console.log("filterData+++", filterData.view.window.location.href);
+      } else {
+        console.log("something went wrong");
+      }
+    });
+
+    //take rxjs  method
+    const intervalCount = interval(1000);
+    const takeFiveTimes = intervalCount.pipe(take(5));
+    takeFiveTimes.subscribe((takeFiveTimes) => {
+      console.log("takeFiveTimes+++++: ", takeFiveTimes) 
+        if(takeFiveTimes===4){ 
+          console.log("update+++");
+        }
+    });
+   
+
+    // takeuntil rxjs  method
+    const source=interval(1000)
+    const clicking =fromEvent(document,'click')
+    const clickData=source.pipe(takeUntil(clicking))
+    clickData.subscribe(takeUntil=>{
+      console.log("takeUntil++++",takeUntil);
+    }  )
+
+  }
