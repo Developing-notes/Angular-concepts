@@ -105,3 +105,9 @@ export class HelloComponent {
     }
   ];
 }
+
+
+ngclass in angular
+ <span class="loading" [ngClass]="{ loading: isLoading }">
+                  {{ !isLoading ? "Register" : "Loading..." }}
+                </span> 
