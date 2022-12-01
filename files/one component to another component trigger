@@ -1,0 +1,34 @@
+You can access component one's method from component two..
+
+componentOne
+---------------
+
+  ngOnInit() {}
+
+  public testCall(){
+    alert("I am here..");    
+  }
+  
+componentTwo
+--------------
+
+import { oneComponent } from '../one.component';
+
+
+@Component({
+  providers:[oneComponent ],
+  selector: 'app-two',
+  templateUrl: ...
+}
+
+
+constructor(private comp: oneComponent ) { }
+
+public callMe(): void {
+    this.comp.testCall();
+  }
+ 
+ componentTwo html file
+ -----------------------
+  
+  <button (click)="callMe()">click</button>
