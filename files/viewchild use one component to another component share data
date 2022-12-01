@@ -1,0 +1,19 @@
+
+component 1
+
+   testCall(){
+    alert("I am here..");    
+  }
+
+
+component 2
+<app-login #login></app-login>
+<button (click)="callMe()">click</button>
+
+
+ts 
+@ViewChild("login",{  static: false }) login: LoginComponent;
+
+callMe(): void {
+      this.login.testCall();
+  }
