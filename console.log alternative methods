@@ -1,0 +1,4 @@
+const { log: myLog } = console;
+
+myLog("hi");
+myLog("testing");
